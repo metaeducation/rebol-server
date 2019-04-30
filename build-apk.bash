@@ -2,6 +2,7 @@
 
 NAME=rebol-server.apk
 KEY=rebol-server.ks
+PASSWORD=rebol-server
 CLASSPATH="" # e.g. "src:libs/<your-lib>.jar"
 
 # END USER CONFIG
@@ -27,13 +28,6 @@ for n in NAME KEY ANDROID_JAR
 do check_var $n; done
 
 check_file $ANDROID_JAR
-
-if ! [ -f $KEY ]
-then
-    echo "GENERATING KEYSTORE ..."
-    check_tool keytool
-    keytool -genkeypair -validity 365 -keystore $KEY -keyalg RSA -keysize 2048
-fi
 
 for n in javac ecj; do
     JAVAC=`which $n`
@@ -104,12 +98,19 @@ cd ./bin
 aapt add unaligned.apk classes.dex
 cd ..
 
-echo "ALIGNING unaligned.apk ..."
-zipalign -f 4 \
-    ./bin/unaligned.apk \
-    ./bin/$NAME
-
-echo "SIGNING $NAME ..."
-apksigner sign --ks $KEY ./bin/$NAME
+case $HOME in
+    /data/data/com.termux*)
+        echo "ALIGNING+SIGNING unaligned.apk ..."
+        apksigner -p $PASSWORD $KEY ./bin/unaligned.apk ./bin/$NAME
+    ;;
+    *)
+        echo "ALIGNING unaligned.apk ..."
+        zipalign -f 4 \
+            ./bin/unaligned.apk \
+            ./bin/$NAME
+        echo "SIGNING $NAME ..."
+        apksigner sign --ks $KEY ./bin/$NAME
+    ;;
+esac
 
 echo "BUILT APP ./bin/$NAME"
