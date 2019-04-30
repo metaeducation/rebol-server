@@ -90,6 +90,7 @@ echo "BUILDING unaligned.apk ..."
 aapt package -f -m \
     -F ./bin/unaligned.apk \
     -M ./AndroidManifest.xml \
+    -A ./assets \
     -S ./res \
     $I_BOOTCLASSPATH
 

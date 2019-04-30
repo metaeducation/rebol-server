@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+<!--
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/browse_console"
+      android:text="Console"
+      android:onClick="browse_console"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/browse_apps"
+      android:text="Apps"
+      android:onClick="browse_apps"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/browse_files"
+      android:text="Files"
+      android:onClick="browse_files"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/startSettings"
+      android:text="Settings"
+      android:onClick="startSettings"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/stopService"
+      android:text="Stop Server"
+      android:onClick="stopService"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/startService"
+      android:text="Restart Server"
+      android:onClick="startService"
+      android:layout_centerHorizontal="true" />
+-->
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/installSystem"
+      android:text="(Re)install System"
+      android:onClick="installSystem"
+      android:layout_centerHorizontal="true" />
+
+</LinearLayout>
