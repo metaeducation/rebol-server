@@ -2,8 +2,10 @@ package giuliolunati.rebolserver;
 
 import android.app.*;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -20,6 +22,7 @@ import java.lang.ProcessBuilder;
 public class MainActivity extends Activity
 {
 	private SharedPreferences mPreferences;
+	private String mPort;
 
 	private void copyAsset(String name) {
 		try {
@@ -48,6 +51,8 @@ public class MainActivity extends Activity
 			installSystem(null);
 		}
 		setContentView(R.layout.main);
+		mPort = mPreferences.getString("port", "8888");
+		startService(new Intent(getBaseContext(), Server.class));
   }
 	public String newAssetsVersion = "2019-04-30.2";
 	public void installSystem(View view) {
@@ -71,5 +76,22 @@ public class MainActivity extends Activity
 		editor.putString("assetsVersion", newAssetsVersion);
 		editor.commit();
 		Toast.makeText(this, "Done.", Toast.LENGTH_SHORT).show();
+	}
+	public void startService(View view) {
+		mPort = mPreferences.getString("port", "8888");
+		stopService(new Intent(getBaseContext(), Server.class));
+		startService(new Intent(getBaseContext(), Server.class));
+	}
+	public void stopService(View view) {
+		stopService(new Intent(getBaseContext(), Server.class));
+	}
+	public void browse_files(View view) {
+		startActivity(new Intent(
+			Intent.ACTION_VIEW, Uri.parse(
+				"http://localhost:"
+				+ mPort
+				+ "/?"
+			)
+		));
 	}
 }

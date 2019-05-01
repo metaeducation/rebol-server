@@ -24,17 +24,18 @@
   <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:id="@+id/browse_files"
-      android:text="Files"
-      android:onClick="browse_files"
+      android:id="@+id/startSettings"
+      android:text="Settings"
+      android:onClick="startSettings"
       android:layout_centerHorizontal="true" />
+-->
 
   <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:id="@+id/startSettings"
-      android:text="Settings"
-      android:onClick="startSettings"
+      android:id="@+id/browse_files"
+      android:text="Files"
+      android:onClick="browse_files"
       android:layout_centerHorizontal="true" />
 
   <Button
@@ -49,10 +50,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/startService"
-      android:text="Restart Server"
+      android:text="(Re)start Server"
       android:onClick="startService"
       android:layout_centerHorizontal="true" />
--->
 
   <Button
       android:layout_width="wrap_content"
