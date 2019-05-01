@@ -3,7 +3,7 @@
 NAME=rebol-server.apk
 KEY=rebol-server.ks
 PASSWORD=rebol-server
-CLASSPATH="" # e.g. "src:libs/<your-lib>.jar"
+CLASSPATH="" # e.g. "java:libs/<your-lib>.jar"
 
 # END USER CONFIG
 
@@ -64,7 +64,7 @@ aapt package -f -m -J ./gen \
 
 echo "COMPILING *.class ..."
 $JAVAC -d obj \
-    `find src/ gen/ -name \*.java` \
+    `find java/ gen/ -name \*.java` \
     $OPT_BOOTCLASSPATH \
     $OPT_CLASSPATH \
     -source 1.7 -target 1.7 # see above
