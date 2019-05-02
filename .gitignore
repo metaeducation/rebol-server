@@ -1,5 +1,7 @@
 *~
 assets/
+assets-src/system/load-r3.js
+assets-src/system/0.16.*
 bin/
 gen/
 obj/
