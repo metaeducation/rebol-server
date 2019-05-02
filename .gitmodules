@@ -1,0 +1,3 @@
+[submodule "assets-src/replpad-js"]
+	path = assets-src/replpad-js
+	url = git@github.com:hostilefork/replpad-js

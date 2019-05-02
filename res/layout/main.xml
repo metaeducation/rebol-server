@@ -8,14 +8,6 @@
   <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:id="@+id/browse_console"
-      android:text="Console"
-      android:onClick="browse_console"
-      android:layout_centerHorizontal="true" />
-
-  <Button
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
       android:id="@+id/browse_apps"
       android:text="Apps"
       android:onClick="browse_apps"
@@ -36,6 +28,14 @@
       android:id="@+id/browse_files"
       android:text="Files"
       android:onClick="browse_files"
+      android:layout_centerHorizontal="true" />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/browse_r3_console"
+      android:text="R3 Console"
+      android:onClick="browse_r3_console"
       android:layout_centerHorizontal="true" />
 
   <Button
