@@ -54,7 +54,7 @@ public class MainActivity extends Activity
 		mPort = mPreferences.getString("port", "8888");
 		startService(new Intent(getBaseContext(), Server.class));
   }
-	public String newAssetsVersion = "2019-05-02";
+	public String newAssetsVersion = "2019-05-04";
 	public void installSystem(View view) {
 		Toast.makeText(this, "Installing system version " + newAssetsVersion + "!", Toast.LENGTH_LONG).show();
 		copyAsset("r3");
@@ -99,7 +99,7 @@ public class MainActivity extends Activity
 			Intent.ACTION_VIEW, Uri.parse(
 				"http://localhost:"
 				+ mPort
-				+ "/replpad-js/"
+				+ "/apps/r3-console/"
 			)
 		));
 	}

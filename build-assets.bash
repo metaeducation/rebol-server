@@ -19,11 +19,11 @@ cd assets-src
 
 zip -r0 ../assets/install.zip system/
 
-mv replpad-js/index.html .tmp
-grep $LOAD_R3_URL .tmp || error "Can't find $LOAD_R3_URL in replpad-js/index.html"
-sed "s@$LOAD_R3_URL@../system/load-r3.js@" .tmp > replpad-js/index.html
-zip -r0 ../assets/install.zip replpad-js/
-mv .tmp replpad-js/index.html
+mv apps/r3-console/index.html .tmp
+grep $LOAD_R3_URL .tmp || error "Can't find $LOAD_R3_URL in r3-console/index.html"
+sed "s@$LOAD_R3_URL@/system/load-r3.js@" .tmp > apps/r3-console/index.html
+zip -r0 ../assets/install.zip apps/r3-console/
+mv .tmp apps/r3-console/index.html
 
 cp install.sh ../assets
 cp $R3 ../assets
