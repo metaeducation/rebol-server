@@ -44,6 +44,7 @@ attempt [
 rem-to-html: attempt[chain [:rem/load-rem :html/to-html]]
 
 cd (:system/options/path)
+
 ext-map: [
   "css" css
   "gif" gif
@@ -110,6 +111,11 @@ html-list-dir: function [
   data
 ]
 
+parse-query: function [query] [
+  query: to-text query
+  r: split query "&"
+]
+
 handle-request: function [
     request [object!]
   ][
@@ -134,6 +140,7 @@ handle-request: function [
     path: join root-dir request/target
     path-type: try exists? path
   ]
+  append request reduce ['real-path clean-path path]
   if path-type = 'dir [
     if not access-dir [return 403]
     if request/query-string [
@@ -143,9 +150,12 @@ handle-request: function [
       return 500
     ]
     if file? access-dir [
-      dir-index: map-each x [%.reb %.rem %.html %.htm] [join to-file access-dir x]
-      for-each x dir-index [
-        if 'file = try exists? join path x [dir-index: x break]
+      for-each ext [%.reb %.rem %.html %.htm] [
+        dir-index: join access-dir ext
+        if 'file = try exists? join path dir-index [
+          if ext = %.reb [append dir-index "?"]
+          break
+        ]
       ] then [dir-index: "?"]
     ] else [dir-index: "?"]
     return redirect-response join request/target dir-index
@@ -156,10 +166,8 @@ handle-request: function [
     file-ext: (if pos [copy next pos] else [_])
     mimetype: try attempt [ext-map/:file-ext]
     if trap [data: read path] [return 403]
-    if mimetype = 'rebol [
-      parse last path-elements [ to ".cgi.reb" end ] else [mimetype: 'text]
-    ] 
     if all [
+      request/query-string
       action? :rem-to-html
       any [
         mimetype = 'rem
@@ -175,21 +183,30 @@ handle-request: function [
       ] [ data: form error mimetype: 'text ]
       else [ mimetype: 'html ]
     ]
-    if mimetype = 'rebol [
+    if all [
+      mimetype = 'rebol
+      request/query-string
+    ][
       mimetype: 'html
       trap [
         data: do data
       ]
       if action? :data [
-        trap [data: data request]
+        if error? e: trap [data: data request]
+        [ data: e mimetype: "text/html" ]
       ]
-      if block? data [
-        mimetype: first data
-        data: next data
-      ] else [
-        if error? data [mimetype: 'text]
+      case [
+        block? :data [
+          mimetype: first data
+          data: next data
+        ]
+        quoted? :data [
+          data: form eval data
+          mimetype: 'text
+        ]
+        error? :data [mimetype: 'text]
       ]
-      data: form data
+      data: form :data
     ]
     return reduce [200 try select mime :mimetype data]
   ]

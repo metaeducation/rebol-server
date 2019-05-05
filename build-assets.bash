@@ -8,22 +8,28 @@ function error { echo $1; exit 1; }
 
 i=`which zip`
 [ $i ] || error "Please put zip in PATH"
+i=`which find`
+[ $i ] || error "Please put find in PATH"
+
+# CLEAN
 
 rm -rf assets
 mkdir assets
 mkdir -p assets-src/system
+find assets-src -name \*~ -exec rm \{\} \;
 
 # BUILD
 
 cd assets-src
 
-zip -r0 ../assets/install.zip system/
-
 mv apps/r3-console/index.html .tmp
 grep $LOAD_R3_URL .tmp || error "Can't find $LOAD_R3_URL in r3-console/index.html"
 sed "s@$LOAD_R3_URL@/system/load-r3.js@" .tmp > apps/r3-console/index.html
-zip -r0 ../assets/install.zip apps/r3-console/
+zip -r0 ../assets/install.zip apps/r3-console/ 
 mv .tmp apps/r3-console/index.html
+
+zip -r0 ../assets/install.zip \
+  system/ apps/index.reb apps/install.reb
 
 cp install.sh ../assets
 cp $R3 ../assets
