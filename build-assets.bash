@@ -1,38 +1,37 @@
 # CONFIG
 
-LOAD_R3_URL="https://metaeducation.s3.amazonaws.com/travis-builds/load-r3.js"
+function fail { echo "$1"; exit 1; }
 
-function error { echo $1; exit 1; }
+function warn { failed=y; echo "$1"; }
 
-[ $R3 ] || error "Please export R3=/path/to/r3-android-executable"
+function check_tools { # tools ...
+    while [ "$1" ]; do
+        [ `which $1` ] || warn "* Please install $1"
+        shift
+    done
+}
 
-i=`which zip`
-[ $i ] || error "Please put zip in PATH"
-i=`which find`
-[ $i ] || error "Please put find in PATH"
+check_tools find zip
+
+if [ $failed ]; then exit 1; fi
 
 # CLEAN
 
+echo "CLEANING ..."
+
 rm -rf assets
 mkdir assets
-mkdir -p assets-src/system
 find assets-src -name \*~ -exec rm \{\} \;
 
 # BUILD
 
+echo "BUILDING ASSETS ..."
+
 cd assets-src
 
-mv apps/r3-console/index.html .tmp
-grep $LOAD_R3_URL .tmp || error "Can't find $LOAD_R3_URL in r3-console/index.html"
-sed "s@$LOAD_R3_URL@/system/load-r3.js@" .tmp > apps/r3-console/index.html
-zip -r0 ../assets/install.zip apps/r3-console/ 
-mv .tmp apps/r3-console/index.html
-
-zip -r0 ../assets/install.zip \
-  system/ apps/index.reb apps/install.reb
-
+zip -r0 ../assets/install.zip *
 cp install.sh ../assets
-cp $R3 ../assets
+cp ../r3 ../assets
 
 cd .. # base dir
 
