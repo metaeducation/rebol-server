@@ -99,13 +99,35 @@ html-list-dir: function [
   if dir != %/ [insert list %../]
   data: copy {<head>
     <meta name="viewport" content="initial-scale=1.0" />
-    <style> a {text-decoration: none} </style>
-  </head>}
+    <style> a {text-decoration: none}
+    body {font-family: monospace}
+    .b {font-weight: bold}
+    </style>
+  </head>
+  [>]: Navigate [V]: View [E]: Exec <hr/>
+  }
   for-each i list [
+    is-rebol-file: did all [
+      not dir? i
+      parse i [thru ".reb" end]
+    ]
     append data unspaced [
-      {<a href="} i 
-      either dir? i [{?">&gt; }] [{">}]
-      i </a> <br/>
+      {<a }
+      if dir? i [{class="b" }]
+      {href="} i
+      {?">[}
+      case [
+        is-rebol-file [{E}]
+        dir? i [{>}]
+        default [{V}]
+      ]
+      {]</a> }
+      {<a }
+      if dir? i [{class="b" }]
+      {href="} i
+      {">}
+      i
+      </a> <br/>
     ]
   ]
   data
@@ -120,8 +142,8 @@ handle-request: function [
     request [object!]
   ][
   path-elements: next split request/target #"/"
+  ; 'extern' url /http://ser.ver/...
   if parse request/request-uri ["/http" opt "s" "://" to end] [
-    ; 'extern' url /http://ser.ver/...
     if all [
       3 = length path-elements
       #"/" != last path-elements/3
@@ -183,30 +205,31 @@ handle-request: function [
       ] [ data: form error mimetype: 'text ]
       else [ mimetype: 'html ]
     ]
-    if all [
-      mimetype = 'rebol
-      request/query-string
-    ][
-      mimetype: 'html
-      trap [
-        data: do data
-      ]
-      if action? :data [
-        if error? e: trap [data: data request]
-        [ data: e mimetype: "text/html" ]
-      ]
-      case [
-        block? :data [
-          mimetype: first data
-          data: next data
+    if request/query-string [
+      if mimetype = 'rebol [
+        mimetype: 'html
+        trap [
+          data: do data
         ]
-        quoted? :data [
-          data: form eval data
-          mimetype: 'text
+        if action? :data [
+          if error? e: trap [data: data request]
+          [ data: e mimetype: "text/html" ]
         ]
-        error? :data [mimetype: 'text]
+        case [
+          block? :data [
+            mimetype: first data
+            data: next data
+          ]
+          quoted? :data [
+            data: form eval data
+            mimetype: 'text
+          ]
+          error? :data [mimetype: 'text]
+        ]
+        data: form :data
+      ] else [
+        mimetype: 'text
       ]
-      data: form :data
     ]
     return reduce [200 try select mime :mimetype data]
   ]
