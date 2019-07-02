@@ -36,6 +36,18 @@ iterate a [case [
 ]]
 
 ;; LIBS
+
+delete-recur: adapt :lib/delete [
+  if file? port [
+    if not exists? port [return null]
+    if 'dir = exists? port [
+      for-each x read dirize port [
+          delete-recur join port [/ x]
+      ]
+    ]
+  ]
+]
+
 import 'httpd
 attempt [
   rem: import 'rem
@@ -134,38 +146,56 @@ html-list-dir: function [
 ]
 
 parse-query: function [query] [
+  xchar: charset "=&"
+  r: make block! 0
+  k: v: _
   query: to-text query
-  r: split query "&"
+  i: 0
+  parse query [any [
+    copy k [to xchar | to end]
+    [ "=" copy v [to "&" | to end]
+    | (v: k k: i: i + 1)
+    ]
+    (
+      append r (attempt [dehex k]) or [k]
+      append r (attempt [dehex v]) or [v]
+    )
+    opt skip
+  ]]
+  r
 ]
 
+request: _
+
 handle-request: function [
-    request [object!]
+    req [object!]
   ][
-  path-elements: next split request/target #"/"
+  set 'request req  ; global 
+  path-elements: next split req/target #"/"
   ; 'extern' url /http://ser.ver/...
-  if parse request/request-uri ["/http" opt "s" "://" to end] [
+  if parse req/request-uri ["/http" opt "s" "://" to end] [
     if all [
       3 = length path-elements
       #"/" != last path-elements/3
     ] [; /http://ser.ver w/out final slash
       path: unspaced [
-        request/target "/"
-        if request/query-string unspaced [
-          "?" to-text request/query-string
+        req/target "/"
+        if req/query-string unspaced [
+          "?" to-text req/query-string
         ]
       ]
       return redirect-response path
     ]
-    path: to-url next request/request-uri
+    path: to-url next req/request-uri
     path-type: 'file
   ] else [
-    path: join root-dir request/target
+    path: join root-dir req/target
     path-type: try exists? path
   ]
-  append request reduce ['real-path clean-path path]
+  append req reduce ['real-path clean-path path]
   if path-type = 'dir [
     if not access-dir [return 403]
-    if request/query-string [
+    if req/query-string [
       if data: html-list-dir path [
         return reduce [200 mime/html data]
       ] 
@@ -180,7 +210,7 @@ handle-request: function [
         ]
       ] then [dir-index: "?"]
     ] else [dir-index: "?"]
-    return redirect-response join request/target dir-index
+    return redirect-response join req/target dir-index
   ]
   if path-type = 'file [
     pos: try find-last last path-elements
@@ -189,8 +219,6 @@ handle-request: function [
     mimetype: try attempt [ext-map/:file-ext]
     if trap [data: read path] [return 403]
     if all [
-      request/query-string
-      action? :rem-to-html
       any [
         mimetype = 'rem
         all [
@@ -198,23 +226,30 @@ handle-request: function [
           "REBOL" = uppercase to-text copy/part data 5
         ]
       ]
+      action? :rem-to-html
+      any [
+        not req/query-string
+        not empty? req/query-string 
+      ]
     ][
-      rem/rem/request: request
-      if error: trap [
+      rem/rem/request: req
+      if error: try trap [
         data: rem-to-html data
       ] [ data: form error mimetype: 'text ]
       else [ mimetype: 'html ]
     ]
-    if request/query-string [
-      if mimetype = 'rebol [
+    if mimetype = 'rebol [
+      if req/query-string [
         mimetype: 'html
-        trap [
+        e: try trap [
           data: do data
         ]
-        if action? :data [
-          if error? e: trap [data: data request]
-          [ data: e mimetype: "text/html" ]
+        if all [not error? e | action? :data] [
+          e: try trap [
+            data: data req
+          ]
         ]
+        if error? e [data: e]
         case [
           block? :data [
             mimetype: first data
@@ -227,9 +262,7 @@ handle-request: function [
           error? :data [mimetype: 'text]
         ]
         data: form :data
-      ] else [
-        mimetype: 'text
-      ]
+      ] else [mimetype: 'text]
     ]
     return reduce [200 try select mime :mimetype data]
   ]
@@ -280,4 +313,4 @@ if verbose >= 1 [
 
 wait server
 
-;; vim: set syn=rebol sw=2 ts=2 sts=2 expandtab:
+;; vim: set et sw=2:

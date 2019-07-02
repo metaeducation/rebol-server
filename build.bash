@@ -4,7 +4,7 @@
 [ -e assets-src/system/load-r3.js ] \
 || bash update-libr3-js.bash
 
-[ -e assets-src/apps/r3-console ] \
+[ -e assets-src/apps/r3-console/index.html ] \
 || bash update-r3-console.bash
 
 bash build-assets.bash
