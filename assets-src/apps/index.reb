@@ -17,7 +17,7 @@ function [request] [
   }
   for-each x read cwd [
     if dir? x [
-      emit ?? reword
+      emit reword
         {<a href='delete.reb?name=$t'>[&ndash;]</a>
           <a href='$x'>$t</a> <br>
         }
