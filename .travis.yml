@@ -54,60 +54,18 @@ env:
 matrix:
   include:
     #
-    # [1] Android5, debug, gcc
-    #
-    # At time of writing, the Rebol binary that gets embedded in this config
-    # was built with no additional extensions besides those in android5-arm.r.
+    # [1] 
     #
     - os: linux
       dist: trusty
       sudo: false  # force new container-based infrastructure
-      language: c
+      language: android
       env:
         - NUMBER=1
-        - CONFIG=android5-arm.r  # what was used on Ren-C's Travis-CI
-        - OS_ID=0.13.2
-        - DEBUG=asserts
-        - STANDARD=c
-        - RIGOROUS=yes
-        - STATIC=yes
-        - HOST=arm-eabi
       addons:
         apt:
           packages:
-            - zip
-            - dx
-            - apksigner
-            - zipalign
-            - javac
 
-    # [2] Android5, release, gcc
-    #
-    # At time of writing, the Rebol binary that gets embedded in this config
-    # was built with the TCC extension (on top of all default extensions in
-    # the android5-arm.r config)
-    #
-    - os: linux
-      dist: trusty
-      sudo: false  # force new container-based infrastructure
-      language: c
-      env:
-        - NUMBER=2
-        - CONFIG=android5-arm.r  # what was used on Ren-C's Travis-CI
-        - OS_ID=0.13.2
-        - DEBUG=none
-        - STANDARD=c
-        - RIGOROUS=yes
-        - STATIC=yes
-        - HOST=arm-eabi
-      addons:
-        apt:
-          packages:
-            - zip
-            - dx
-            - apksigner
-            - zipalign
-            - javac
 
 # The install step occurs before the `script:` step runs.  The language that
 # was specified in the `matrix:` entry for each instance will guide certain
@@ -208,6 +166,7 @@ script:
 # https://github.com/metaeducation/rebol-server/issues/3
 
     - |
+      PATH=/usr/local/android-sdk/build-tools/25.0.2:$PATH
       bash build.bash
 
 # DEPLOY STEP:
