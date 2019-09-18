@@ -122,7 +122,7 @@ case $HOME in
             ./bin/$NAME \
         || fail "FAILED ALIGNING unaligned.apk ..."
         echo "SIGNING $NAME ..."
-        apksigner sign --ks $KEY ./bin/$NAME \
+        apksigner sign --ks $KEY --ks-pass pass:$PASSWORD ./bin/$NAME \
         || fail "FAILED SIGNING $NAME ..."
     ;;
 esac
