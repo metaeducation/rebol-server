@@ -30,14 +30,11 @@ git:
 #
 env:
   global:
-    #
-    # See the notes on the Ren-C .travis.yml for these Amazon AWS keys.  The
-    # most important thing to note is that the Travis "deploy" feature is not
-    # used by this script, but uploads are manual via the `aws` command-line
-    # tool, to get more control over the upload ordering and MIME types.
-    #
-    - secure: 'Bex3tqrlsnv+t3+AJu6nG8bcbfHXeBNWIUUdcEeyB8gWnWnVuBsC5hTw9cUhEWJchJSsV4LeWVL51harzOQRntszyfjeNvPQozCXbTQVGd1tn5Rpt1QKN9VBK007c+ERj9L8JzFkM2HdeVusYY4Bz5tI883DSJkydyJpJp21mG9i8a17bqJsgBW0JmMsMsdv1ilaeb8/Luo8bn0ObIWTTz+4/6RF4XU9UcWLH7I4HlGb3qufR9chWCX7jTT0SLRkEgfudr+KVrY4xIspiPlVwrKvagnOTFcYLxN4JpGOgn1rnCcOxsWo4kE4dwgXZvEn8W2HJmJhzhAHDLkF0S7YhIDQaScJLwSVECI9xu68V5siWdyhzyrSb2K7V8Mtzryjzq1QueCrRRTj7XLY7sx5OxeP//RVMY0Poil5DdB84nI1wezzmT1kj7dkc1Fr1ZqdYSEfCZNd1v+DeRmAf/N70xUyx1tSxAHD96kjDM3lGILIrlt9RLWdeT0BqxQxzaKCowPVgfztH0nzPcoe1DfNfIhG9mEdjeJfLC7hAgc9Dn0KTo/oSwX/TBsTavV+6SPxH1D4q1xVdY9p4G2hS/N1xaqf7ys4DQOPwWZwvhujwGtto4fy7VMvDtX7jI6++0dJe+baG0DetlHvUGKzWpBJgk02k3mREH+9Ui8f7T9vn8Y='
-    - secure: 'IlBRG9mRM0BDtb9ZJDKl4QVRjs/e3KxvjEdVS9e8+PlGq+xMDVGQdje9WOED/bhTcoAYabhLKkXY8YZg6rlVj4ecyjjmZRfPA4D9YVMVHZVNldLX9Ed79Kv95dTvFdn6xl9Tbk/CEqtxfDwcN2hZqv9M3TXN2+sKzny6p4ENc8O7sz0Stb4GyFgPdWSIs4SZv/r8/feMgWiUx+q1NFFarMmFsLtKVuiPIyoU6fGW1zZPyh10jKuhi9GYBStcMHIWqvU+9+jbqchMJT1t/1fyEf0fJokNMH2KXCVDbsu7nKhaVZbIxirLdZNicKfzype1uRgzAB/Crpup+TwnINd17HPSqjCnqntuS+pO0mIRcXVhNSE8TG9S8x4N0pgtKYHKyfAjElmjLwPfoMhu5VlZishn6heeUALbQ7y44YwWwG8EoW4PnRFIGg7V4EjlHJkcmDhJWrZX2hVvSGJ72lFhHXFMcr+VKhXWlmK97XdFAz/c/LlSyyrmKtIE6W5kwhJC8bbrpETA/wQ9pP3WEVY28bka24LqI1g0hiDn7cyXae7Ikss36Y8eB/9/00EovCPHw1o+dyenXI10Q8+yorQ42xrjo1bXuYRohCvI+FmV4XFLkJ+c6wDTSKhJTcUhZsQva2F0ipeyqhGQQGkLiZ8BvdoSPHHBx2odikgho9VQZ48='
+    # AWS_ACCESS_KEY_ID
+    - secure: 'dncgHdqloR7h0nRGuEAwbxsnNziUix9BpAaNY9m7Y0se/TeGMdcSpGD0xkfCfUVnJjLWRg4/pMf74IbiohHK1GapZJDxbr/cIqIgh8GeQe2rGXOvZCT5EjgTql4AVYdVt85jjKaWJzW7i83k768TjO8L1fotgDPyZ7LUgDqomyTpuCu+QKxAxw+BEvkXZvka76VH0EtlEd/NHXsngYf1G0gkAhhdwN8xEQ82n2++xXOIJQAZzl+jIUceNOzIwVFRzXAO7rvhx2EzZY+IMpEXTE+WHh1ASihTK9QJwSkxohNS3xk2k/gJUSt+VZoM3Iwau0scxkil65O5KwAX24M9HJQBxungMDru7bBSk5bgconGEzShWa2RBKJexbxVLFU7uN5sB3GXD+uLXwhmzwND7fAscchJpYfM5z85R1/WwIH7Bx9vEVRUyMSdD78p6iIlr1onSZh4+RgutjCd2vF3BHFN1/sOUulAYEf8bpnOQ+KRx2mYKZk87PG3hVGlEAyXC6UsfJi9iVdwSC4eD2FBGp2/dNh316y4PDONvso6a94uEMLHrGlvUs1SeULDu/EMIY5ZPjh4JTYzwthAi0kZVz+cWAySPl26wV+IKsAtPU1DDej7xQ6hE7fCPBQysV9X4p9Da7UjIgFoxi5Q6JV1//jxQuWcALFoqKUAdNeWquA='
+    # AWS_SECRET_ACCESS_KEY
+    - secure: 'kFxV7VP28iis672zStvuq7YLXqOIwAmgUF7x4/LxxivvvM/Yw4kjrAXPu0NVAIYryIm5UVBQXU20ynID03yFfQNiKn4v1zusGS6qW1pI0XLcg6gM4mU+t6bRoZVesXpuJJQbqsKtt8XLopHcqxJL9Qrq1hXb9wP5xkel262wYYJdvoPXzefRqev6harB3MxdNHoWak0H92xttx/k5N0zBQ6x303USnOaIFsqgm1xYqSEE+bCO7mq4W19q8fc8NCDh00AdnSofs67enOIZ6ggW/wE8U09DWbOD5M4HIYrjmRmnucg55+aJH5rP0r8/dBWVegovVSq5aXruf+bF+/26QigkbS5IOX6gfNQeruKzNmZMMK0Vv1390xatQYT3+4KHArzT/cRFTjIAceRvx8kCs47XXemzcQtiobHcL9NfGADQR0sZMEOL25ZtAX7NMySSNkkPPnECTFBwB86gN3x23mzein9oKfCLTxt2Gjk0O02/qabNV5nBKAjgJCm9hKmMTvA5ZL/5AY+uOHszCc2Y4eIqBeVRSOR4vfWlXwlB76eY4FsBJdvc+FU338pMeJSqeppeomz8LuKRh43K/L3UKnnMe+8ErOPIUg/DVKGqjbq0wxsqB0z1dmM8PFSytTHbByIfw4grAHRMi8UuC0npyB5ozrDLofssJ5BRr6PHr4='
+
     - AWS_S3_BUCKET_NAME: 'metaeducation'
 
 
@@ -195,10 +192,12 @@ script:
     #
     # Note: [[-e]] tests for "existence"
     #
-    - mkdir "$OS_ID"
     - |
-      mv bin/rebol-server.apk "${OS_ID}/${NEW_NAME}"
-
+      UPLOAD_DIR=rebol-server
+      mkdir -p $UPLOAD_DIR
+      mv bin/rebol-server.apk "$UPLOAD_DIR/${NEW_NAME}"
+      ls
+    
     # Web Browsers are picky about the MIME type of some files.  We want to
     # make sure that the right type is chosen:
     #
@@ -214,7 +213,7 @@ script:
     # http://stackoverflow.com/a/42547424/211160
     #
     - |
-      if [[ ${TRAVIS_BRANCH} != "master" || ${TRAVIS_PULL_REQUEST} != "false" || ${R3_EXIT_STATUS} != 0 ]]
+      if [[ ${TRAVIS_BRANCH} != "master" || ${TRAVIS_PULL_REQUEST} != "false" ]]
       then exit 0 # skip the deploy step
       fi
 
@@ -236,7 +235,12 @@ script:
         fi
       }
 
-      for i in $OS_ID/*; do upload $i; done
+      for i in $UPLOAD_DIR/*; do 
+        echo $i
+        upload $i;
+      done
+
+      echo "UPLOAD DONE."
 
       # !!! This is where we would put any finalization code for the upload.
       # Here's what Ren-C's finalization does, to provide the hash of the
