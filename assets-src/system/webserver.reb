@@ -48,7 +48,7 @@ delete-recur: adapt :lib/delete [
   ]
 ]
 
-import %rebol-httpd/httpd.reb
+import 'httpd
 attempt [
   rem: import 'rem
   html: import 'html

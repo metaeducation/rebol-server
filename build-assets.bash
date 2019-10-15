@@ -1,5 +1,7 @@
 # CONFIG
 
+LOAD_R3_URL="https://metaeducation.s3.amazonaws.com/travis-builds/load-r3.js"
+
 function fail { echo "$1"; exit 1; }
 
 function warn { failed=y; echo "$1"; }
@@ -26,6 +28,10 @@ find assets-src -name \*~ -exec rm \{\} \;
 # BUILD
 
 echo "BUILDING ASSETS ..."
+
+cp rebol-httpd/httpd.reb assets-src/system/
+cp -r r3-console assets-src/apps
+sed -i "s=$LOAD_R3_URL=/system/load-r3.js=" assets-src/apps/r3-console/index.html
 
 cd assets-src
 
