@@ -5,7 +5,8 @@ KEY=rebol-server.ks
 PASSWORD=rebol-server
 ANDROID_JAR=./android.jar
 CLASSPATH="" # e.g. "java:libs/<your-lib>.jar"
-ANDROID_JAR_URL="https://github.com/giuliolunati/android-devel/raw/master/android-23/android.jar"
+# see https://androidsdkmanager.azurewebsites.net/SDKPlatform
+ANDROID_JAR_URL="https://github.com/giuliolunati/android-devel/raw/master/android-28.6-9.0.jar"
 
 # END USER CONFIG
 

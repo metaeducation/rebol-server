@@ -36,11 +36,16 @@ public class Server extends ForegroundService {
     mBinder = new LocalBinder();
   }
 
+  @SuppressWarnings("deprecation")
+  private Notification.Builder notificationBuilder(Context ctx) {
+    return new Notification.Builder(ctx);
+  }
+
   @Override
   protected Notification createNotification() {
     Intent notificationIntent = new Intent(this, Server.class);
     mNotificationPendingIntent = PendingIntent.getService(this, 0, notificationIntent, 0);
-    mBuilder = new Notification.Builder(this);
+    mBuilder = notificationBuilder(this);
     mBuilder.setSmallIcon(R.drawable.r3_icon);
     mBuilder.setContentTitle("Rebol Server");
     mBuilder.setTicker(null);
