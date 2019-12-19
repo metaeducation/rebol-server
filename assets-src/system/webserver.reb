@@ -173,21 +173,9 @@ handle-request: function [
   set 'request req  ; global 
   path-elements: next split req/target #"/"
   ; 'extern' url /http://ser.ver/...
-  if parse req/request-uri ["/http" opt "s" "://" to end] [
-    if all [
-      3 = length path-elements
-      #"/" != last path-elements/3
-    ] [; /http://ser.ver w/out final slash
-      path: unspaced [
-        req/target "/"
-        if req/query-string unspaced [
-          "?" to-text req/query-string
-        ]
-      ]
-      return redirect-response path
-    ]
-    path: to-url next req/request-uri
-    path-type: 'file
+  if parse req/request-uri ["//"] [
+    lib/print req/request-uri
+    return reduce [200 mime/html "req/request-uri"]
   ] else [
     path: join root-dir req/target
     path-type: try exists? path
