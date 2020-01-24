@@ -182,7 +182,7 @@ script:
     # Note: -z tests if a variable is undefined
     #
     - NEW_NAME="rebol-server-${GIT_COMMIT_SHORT}"
-    - if [[ $DEBUG != none ]]; then NEW_NAME+='-debug'; fi
+    - if [[ $DEBUG != "" ]]; then NEW_NAME+='-debug'; fi
     - NEW_NAME+='.apk'
     - echo "$NEW_NAME"
 
@@ -195,6 +195,7 @@ script:
     - |
       UPLOAD_DIR=rebol-server
       mkdir -p $UPLOAD_DIR
+      cp bin/rebol-server.apk "$UPLOAD_DIR"
       mv bin/rebol-server.apk "$UPLOAD_DIR/${NEW_NAME}"
       ls
     
