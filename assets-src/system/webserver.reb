@@ -171,6 +171,7 @@ handle-request: function [
     req [object!]
   ][
   set 'request req  ; global 
+  req/target: my dehex
   path-elements: next split req/target #"/"
   ; 'extern' url /http://ser.ver/...
   if parse req/request-uri ["//"] [
