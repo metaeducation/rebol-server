@@ -71,18 +71,22 @@ ext-map: [
   "r3" rebol
   "reb" rebol
   "rem" rem
+  "svg" svg
   "txt" text
   "wasm" wasm
 ]
 
 mime: make map! [
+  css "text/css"
+  gif "image/gif"
   html "text/html"
   jpeg "image/jpeg"
-  r "text/plain"
-  text "text/plain"
   js "application/javascript"
   json "application/json"
-  css "text/css"
+  png "image/png"
+  r "text/plain"
+  svg "image/svg+xml"
+  text "text/plain"
   wasm "application/wasm"
 ]
 
