@@ -3,8 +3,9 @@
 NAME=rebol-server.apk
 KEY=rebol-server.ks
 PASSWORD=rebol-server
-ANDROID_JAR=./android.jar
+ANDROID_JAR=../android.jar
 CLASSPATH="" # e.g. "java:libs/<your-lib>.jar"
+
 # see https://androidsdkmanager.azurewebsites.net/SDKPlatform
 ANDROID_JAR_URL="https://github.com/giuliolunati/android-devel/raw/master/android-28.6-9.0.jar"
 
@@ -15,6 +16,13 @@ echo "CHECKING SYSTEM ..."
 function fail { echo "$1"; exit 1; }
 
 function warn { failed=y; echo "$1"; }
+
+function check_files { # files ...
+    for i in "$@"; do
+        name=`eval echo "$""$i"`
+        [ -e $name ] || warn "* Please provide $i"
+    done
+}
 
 function check_tools { # tools ...
     while [ "$1" ]; do
@@ -47,7 +55,7 @@ done
 
 [ -f $ANDROID_JAR ] \
 || download $ANDROID_JAR_URL $ANDROID_JAR \
-|| check_file $ANDROID_JAR
+|| check_files $ANDROID_JAR
 
 if [ $failed ]; then exit 1; fi
 
