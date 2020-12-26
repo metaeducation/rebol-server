@@ -55,7 +55,7 @@ attempt [
 ]
 rem-to-html: attempt[chain [:rem/load-rem :html/to-html]]
 
-cd (:system/options/path)
+change-dir system/options/path
 
 ext-map: [
   "css" css
@@ -135,8 +135,7 @@ html-list-dir: function [
       case [
         is-rebol-file [{E}]
         dir? i [{>}]
-        default [{V}]
-      ]
+      ] else [{V}]
       {]</a> }
       {<a }
       if dir? i [{class="b" }]
