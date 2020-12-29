@@ -1,8 +1,8 @@
 # USER CONFIG
 
 NAME=rebol-server.apk
-KEY=rebol-server.ks
-PASSWORD=rebol-server
+KEY=privkey.pkcs8.der
+CERT=cert.x509.pem
 ANDROID_JAR=../android.jar
 CLASSPATH="" # e.g. "java:libs/<your-lib>.jar"
 
@@ -118,22 +118,14 @@ cd ./bin
     || fail "ADDING classes.dex TO unaligned.apk"
 cd ..
 
-case $HOME in
-    /data/data/com.termux*)
-        echo "ALIGNING+SIGNING unaligned.apk ..."
-        apksigner -p $PASSWORD $KEY ./bin/unaligned.apk ./bin/$NAME \
-        || fail "FAILED ALIGNING+SIGNING unaligned.apk ..."
-    ;;
-    *)
-        echo "ALIGNING unaligned.apk ..."
-        zipalign -f 4 \
-            ./bin/unaligned.apk \
-            ./bin/$NAME \
-        || fail "FAILED ALIGNING unaligned.apk ..."
-        echo "SIGNING $NAME ..."
-        apksigner sign --ks $KEY --ks-pass pass:$PASSWORD ./bin/$NAME \
-        || fail "FAILED SIGNING $NAME ..."
-    ;;
-esac
+echo "ALIGNING unaligned.apk ..."
+zipalign -f 4 \
+    ./bin/unaligned.apk \
+    ./bin/$NAME \
+|| fail "FAILED ALIGNING unaligned.apk ..."
+
+echo "SIGNING $NAME ..."
+apksigner sign --key $KEY --cert $CERT ./bin/$NAME \
+|| fail "FAILED SIGNING $NAME ..."
 
 echo "BUILT APP ./bin/$NAME"
