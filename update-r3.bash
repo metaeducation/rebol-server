@@ -1,4 +1,4 @@
-CDN="https://metaeducation.s3.amazonaws.com/travis-builds"
+CDN="https://aquilone.stream/home/ren-c/build"
 
 function fail { echo $1; exit 1; }
 
@@ -9,11 +9,7 @@ function download { # src target
   curl -s $1 > $2
 }
 
-download "$CDN/0.13.2/last-deploy.short-hash" last-deploy.short-hash
-hash=`cat last-deploy.short-hash`
-[ $hash ] || fail "$i not found"
-download $CDN/0.13.2/r3-$hash r3
+download $CDN/0.13.2/r3 r3
 chmod a+x r3
-rm last-deploy.short-hash
 
 # vim: set et sw=2:
