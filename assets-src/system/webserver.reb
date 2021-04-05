@@ -286,15 +286,25 @@ server: open compose [
     ;
     ; https://github.com/metaeducation/rebol-server/issues/9
     ; 
-    if let testfile: uparse request.target ["/testwrite" return thru end] [
-      let err: trap [write as file! testfile "TESTWRITE!"]
+    trap [
+      uparse request.target [
+        "/testwrite" return thru end
+      ] then testfile -> [
+        write as file! testfile "TESTWRITE!"
+        res: reduce [
+          200
+          "text/html"
+          unspaced [<pre> testfile _ "written" </pre>]
+        ]
+      ] else [
+        res: handle-request request
+      ]
+    ] then err -> [  ; handling (or testwrite) failed
       res: reduce [
         200
         "text/html"
-        unspaced [<pre> any [mold err, testfile] </pre>]
-     ]
-    ] else [
-      res: handle-request request
+        unspaced [<pre> mold err </pre>]
+      ]
     ]
 
     if integer? res [
