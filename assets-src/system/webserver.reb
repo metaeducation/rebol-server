@@ -236,7 +236,7 @@ handle-request: function [
         e: try trap [
           data: do data
         ]
-        if all [not error? e | action? :data] [
+        if all [not error? e, action? :data] [
           e: try trap [
             data: data req
           ]
