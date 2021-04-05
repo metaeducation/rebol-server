@@ -278,7 +278,21 @@ server: open compose [
         request/request-uri
       ]
     ]
-    res: handle-request request
+
+    ; !!! This is a hook inserted for purposes of being
+    ; able to know if a screenless emulator is running
+    ; the console correctly.  /data/local/tmp is a special
+    ; writable folder in Android.
+    ;
+    ; https://github.com/metaeducation/rebol-server/issues/9
+    ; 
+    if request/target = "/testwrite" [
+       lib/print "writing /data/local/tmp/testwrite.txt"
+       write %/data/local/tmp/testwrite.txt "TESTWRITE!"
+    ] else [
+       res: handle-request request
+    ]
+
     if integer? res [
       response/status: res
       response/type: "text/html"
