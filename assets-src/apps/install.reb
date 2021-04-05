@@ -29,7 +29,7 @@ function [request] [
   mkdir/deep tmp
   unzip/quiet tmp zip
   src: read tmp
-  src: either (1 = length-of src) and [dir? src/1]
+  src: either (1 = length-of src) and (dir? src/1)
   [ join tmp src/1 ] [tmp]
   fix-load-r3 join src %index.html
   delete-recur target

@@ -160,8 +160,8 @@ parse-query: function [query] [
     | (v: k k: i: i + 1)
     ]
     (
-      append r (attempt [dehex k]) or [k]
-      append r (attempt [dehex v]) or [v]
+      append r (attempt [dehex k] else [k])
+      append r (attempt [dehex v] else [v])
     )
     opt skip
   ]]
