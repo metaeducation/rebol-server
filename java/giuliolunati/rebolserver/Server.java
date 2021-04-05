@@ -122,7 +122,7 @@ public class Server extends ForegroundService {
       basepath + "/system/r3"
       , basepath + "/system/webserver.reb"
       , mPort
-      , basepath
+      , basepath + "/"  // Ren-C requires directories end in `/`
       , "-a"
       , "index"
     };

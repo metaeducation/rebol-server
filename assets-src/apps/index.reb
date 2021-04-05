@@ -29,7 +29,7 @@ function [request] [
     <i>(see <a href=apps-list.reb>apps-list.reb</a>)</i>
     <hr/>
   }
-  apps-list: load root-dir/apps/apps-list.reb
+  apps-list: load %% (root-dir)/apps/apps-list.reb
   for-each [name src desc] apps-list [
     emit reword {
         <p>

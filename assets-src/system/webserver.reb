@@ -41,8 +41,9 @@ delete-recur: adapt :lib/delete [
   if file? port [
     if not exists? port [return null]
     if 'dir = exists? port [
-      for-each x read dirize port [
-          delete-recur join port [/ x]
+      port: dirize port
+      for-each x read port [
+          delete-recur %% (port)/(x)
       ]
     ]
   ]
