@@ -286,11 +286,15 @@ server: open compose [
     ;
     ; https://github.com/metaeducation/rebol-server/issues/9
     ; 
-    if request/target = "/testwrite" [
-       lib/print "writing /data/local/tmp/testwrite.txt"
-       write %/data/local/tmp/testwrite.txt "TESTWRITE!"
+    if let testfile: uparse request.target ["/testwrite" return thru end] [
+      let err: trap [write as file! testfile "TESTWRITE!"]
+      res: reduce [
+        200
+        "text/html"
+        unspaced [<pre> any [mold err, testfile] </pre>]
+     ]
     ] else [
-       res: handle-request request
+      res: handle-request request
     ]
 
     if integer? res [
