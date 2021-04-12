@@ -18,21 +18,28 @@ root-dir: %"./"
 access-dir: false
 verbose: 1
 
-a: system/options/args
-iterate a [case [
-    "-a" = a/1 [
-      a: next a
-      access-dir: case [
-        tail? a [true]
-        a/1 = "true" [true]
-        a/1 = "false" [false]
-      ] else [to-file a/1]
-    ]
-    find ["-h" "-help" "--help"] a/1 [-help quit]
-    "-q" = a/1 [verbose: 0]
-    "-v" = a/1 [verbose: 2]
-    integer? load a/1 [port: load a/1]
-    true [root-dir: to-file a/1]
+uparse system.options.args [while [
+  "-a", access-dir: [
+      end @(true)
+    | "true" @(true)
+    | "false" @(false)
+    | dir: skip, @(to-file dir)
+  ]
+  |
+  ["-h" | "-help" | "--help" (-help, quit)]
+  |
+  verbose: [
+      "-q" @(0)
+    | "-v" @(2)
+  ]
+  |
+  bad: into text! @["-" to end] (
+    fail ["Unknown command line switch:" bad]
+  )
+  |
+  port: into text! [integer!]
+  | 
+  arg: skip (root-dir: to-file arg)
 ]]
 
 ;; LIBS
