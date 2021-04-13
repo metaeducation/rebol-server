@@ -20,17 +20,17 @@ verbose: 1
 
 uparse system.options.args [while [
   "-a", access-dir: [
-      end @(true)
-    | "true" @(true)
-    | "false" @(false)
-    | dir: skip, @(to-file dir)
+      end (true)
+    | "true" (true)
+    | "false" (false)
+    | dir: skip, (to-file dir)
   ]
   |
   ["-h" | "-help" | "--help" (-help, quit)]
   |
   verbose: [
-      "-q" @(0)
-    | "-v" @(2)
+      "-q" (0)
+    | "-v" (2)
   ]
   |
   bad: into text! @["-" to end] (
