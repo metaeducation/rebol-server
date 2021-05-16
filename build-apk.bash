@@ -48,7 +48,7 @@ check_vars NAME KEY ANDROID_JAR
 check_tools aapt dx apksigner zipalign curl
 
 for n in javac ecj; do
-    JAVAC=`which $n`
+    JAVAC=`which $n` || continue
     [ $JAVAC ] && break
 done
 [ $JAVAC ] || warn "* Please install javac or ecj"
