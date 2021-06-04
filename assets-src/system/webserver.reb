@@ -133,7 +133,7 @@ html-list-dir: function [
   for-each i list [
     is-rebol-file: did all [
       not dir? i
-      parse i [thru ".reb" end]
+      parse? i [thru ".reb"]
     ]
     append data unspaced [
       {<a }
@@ -185,7 +185,7 @@ handle-request: function [
   req/target: my dehex
   path-elements: next split req/target #"/"
   ; 'extern' url /http://ser.ver/...
-  if parse req/request-uri ["//"] [
+  parse req/request-uri ["//"] then [
     lib/print req/request-uri
     return reduce [200 mime/html "req/request-uri"]
   ] else [
@@ -296,7 +296,7 @@ server: open compose [
     ; 
     trap [
       uparse request.target [
-        "/testwrite" return thru end
+        "/testwrite" across thru end
       ] then testfile -> [
         write as file! testfile "TESTWRITE!"
         res: reduce [
