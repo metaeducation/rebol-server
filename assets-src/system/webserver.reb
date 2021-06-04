@@ -23,15 +23,12 @@ uparse system.options.args [while [
       <end> (true)
     | "true" (true)
     | "false" (false)
-    | dir: to-file/ <any>
+    | to-file/ <any>
   ]
   |
   ["-h" | "-help" | "--help" || (-help, quit)]
   |
-  verbose: [
-      "-q" (0)
-    | "-v" (2)
-  ]
+  verbose: ["-q" (0) | "-v" (2)]
   |
   bad: into text! ["-" across to <end>] (
     fail ["Unknown command line switch:" bad]
