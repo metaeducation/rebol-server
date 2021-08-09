@@ -52,15 +52,14 @@ So really the main thing to do is make sure you have the right Android packing
 tools installed.  You'll need to `apt install` the following:
 
 * `zip`
-* `dx`
-* `apksigner`
-* `zipalign`
+* `curl`
+* `aapt`
+* `javac` or `ecj`
+* `zipalign` (Termux: it's packaged with aapt)
+* `dx` (Termux) or `dalvik-exchange` (Debian/Ubuntu)
+* `apksigner` 
 
-Which Java you install depends on if you are making the package on your phone
-via Termux, or just using an ordinary Linux:
-
-* If using Linux: `javac`
-* If using Termux: `ecj`
+(*Note:* in Termux/32bit apksigner may be broken; then install [the old version](http://termux.net/dists/stable/main/binary-all/apksigner_0.7-2_all.deb"))
 
 If all those dependencies are in place, you can run `bash build.bash` and it
 should "just work".  If not, please raise an issue:
