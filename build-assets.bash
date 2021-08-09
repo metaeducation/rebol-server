@@ -30,6 +30,7 @@ find assets-src -name \*~ -exec rm \{\} \;
 echo "BUILDING ASSETS ..."
 
 cp rebol-httpd/httpd.reb assets-src/system/
+cp rebol-httpd/webserver.reb assets-src/system/
 cp -r r3-console assets-src/apps
 sed -i "s=$LOAD_R3_URL=/system/load-r3.js=" assets-src/apps/r3-console/index.html
 
