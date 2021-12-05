@@ -29,6 +29,7 @@ find assets-src -name \*~ -exec rm \{\} \;
 
 echo "BUILDING ASSETS ..."
 
+mkdir -p assets-src/system
 cp rebol-httpd/httpd.reb assets-src/system/
 cp rebol-httpd/webserver.reb assets-src/system/
 cp -r r3-console assets-src/apps

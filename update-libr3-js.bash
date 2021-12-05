@@ -9,6 +9,7 @@ function download { # src target
 
 [ `which curl` ] || fail "Please put curl in PATH"
 
+mkdir -p assets-src/system
 cd assets-src/system
 i="load-r3.js"
 download $CDN/$i $i
