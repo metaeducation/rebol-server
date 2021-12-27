@@ -1,6 +1,6 @@
-[submodule "assets-src/replpad-js"]
+[submodule "replpad-js"]
 	path = r3-console
 	url = https://github.com/hostilefork/replpad-js
-[submodule "assets-src/system/rebol-httpd"]
+[submodule "rebol-httpd"]
 	path = rebol-httpd
 	url = https://github.com/metaeducation/rebol-httpd
